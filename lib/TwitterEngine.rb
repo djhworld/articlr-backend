@@ -12,7 +12,7 @@ class TwitterEngine
                               tweet.location,
                               tweet.text,
                               tweet.created_at,
-                              tweet.photo).to_json)
+                              tweet.photo).to_hash)
         end
         results
     end

@@ -11,7 +11,7 @@ class ContextEngine
         raise ArgumentError, "You must setup a context profile!" if @context_profile.nil?
         puts "Getting twitter information for #{@context_profile}"
         tweets = get_twitter_stream
-        { :context => tweets }
+        puts ({ :context => tweets }.to_json)
     end
 
     def get_twitter_stream

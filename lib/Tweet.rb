@@ -5,7 +5,7 @@ class Tweet
         @id, @user, @location, @message, @date, @photo = id, user, location, message, date, photo
     end
 
-    def to_json
-        { :id => @id, :user => @user, :location => @location, :message => @message, :date => @date, :photo => @photo }.to_json
+    def to_hash
+        { :id => @id, :user => @user, :location => @location, :message => @message, :date => @date, :photo => @photo }
     end
 end
