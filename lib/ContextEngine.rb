@@ -11,12 +11,12 @@ class ContextEngine
         raise ArgumentError, "You must setup a context profile!" if @context_profile.nil?
         puts "Getting twitter information for #{@context_profile}"
         tweets = get_twitter_stream
-        puts ({ :context => tweets }.to_json)
+        { :context => { :tweets => tweets } }
     end
 
     def get_twitter_stream
         twitter = TwitterEngine.new
         tweets = twitter.search_near_me(@context_profile.location[:latitude], @context_profile.location[:longitude], (5.to_s << "mi"), @keywords)
-        { :tweets => tweets}
+        tweets
     end
 end
