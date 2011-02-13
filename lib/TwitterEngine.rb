@@ -39,7 +39,7 @@ class TwitterEngine
                 @tweets << (Tweet.new(tweet.id,
                                       tweet.from_user,
                                       tweet.location,
-                                      tweet.text,
+                                      URI.escape(tweet.text),
                                       DateTime.parse(tweet.created_at),
                                       URI.escape(tweet.profile_image_url)))
             end
