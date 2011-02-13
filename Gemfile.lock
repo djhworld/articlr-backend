@@ -8,12 +8,16 @@ GEM
       rack (>= 1.1.0, < 2)
     faraday_middleware (0.3.2)
       faraday (~> 0.5.4)
+    flickraw (0.8.4)
+      json (>= 1.1.1)
+    flickraw-cached (20100707.1)
+      flickraw
     hashie (1.0.0)
+    json (1.4.6)
     multi_json (0.0.5)
     multi_xml (0.2.1)
     multipart-post (1.1.0)
     rack (1.2.1)
-    redis (2.1.1)
     simple_oauth (0.1.4)
     sinatra (1.1.2)
       rack (~> 1.1)
@@ -31,6 +35,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  redis
+  flickraw-cached
   sinatra
   twitter

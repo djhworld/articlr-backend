@@ -29,8 +29,8 @@ class ContextEngine
 
 
     def get_photo_stream
-        photos = @photo_engine.search_near_me(@context_profile.location[:latitude], @context_profile.location[:longitude], (5.to_s << "mi"))
-        photos
+        results = @photo_engine.search_near_me(@context_profile.location[:latitude], @context_profile.location[:longitude], (5.to_s << "mi"), @context_profile.keywords)
+        results
     end
 
 end
