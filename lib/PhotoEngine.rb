@@ -6,7 +6,6 @@ class PhotoEngine
     end
 
     def search_near_me(lat,long,rad,keywords)
-        if cache_expired
             FlickRaw.api_key="283720505822a34d2ab61c92f98cfc09"
             FlickRaw.shared_secret="e6da9a52a9dcaed6"
             photos = flickr.photos.search(:lat => lat, :lon => long, :has_geo=>1, :radius=>5, :radius_units=>"mi", :accuracy => 12, :min_upload_date=> (DateTime.now-(60*60)), :text=>keywords.first) #, :tags=>"gsxsw")
@@ -18,7 +17,6 @@ class PhotoEngine
             end
 
             @cache_expires = Time.now+(60*CACHE_EXPIRY)
-        end
         @flickr_results
     end
 
