@@ -16,6 +16,6 @@ class PhotoEngine
     end
 
     def mkurl(photo_id, photo_farm, photo_server, photo_secret)
-        "http://farm#{photo_farm}.static.flickr.com/#{photo_server}/#{photo_id}_#{photo_secret}_s.jpg"
+        "http://farm#{photo_farm}.static.flickr.com/#{photo_server}/#{photo_id}_#{photo_secret}_m.jpg"
     end
 end
