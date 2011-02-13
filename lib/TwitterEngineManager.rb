@@ -48,6 +48,5 @@ class TwitterEngineManager
         tweets.sort_by! { |tweet| tweet.date }.reverse!
         tweets.uniq! { |tweet| tweet.id }
         tweets.map! { |item| item.to_hash }
-
     end
 end

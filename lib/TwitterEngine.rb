@@ -37,11 +37,11 @@ class TwitterEngine
 
             results.each do |tweet|
                 @tweets << (Tweet.new(tweet.id,
-                                      tweet.from_user,
+                                      URI.escape(tweet.from_user),
                                       tweet.location,
                                       URI.escape(tweet.text),
                                       DateTime.parse(tweet.created_at),
-                                      tweet.photo))
+                                      URI.escape(tweet.profile_image_url)))
             end
 
             @since_id = @tweets.last.id if @tweets.size > 0
