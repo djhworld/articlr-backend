@@ -10,6 +10,7 @@ class ArticlrBackend < Sinatra::Base
     end
 
    get '/context' do
+       puts "this is an XHR request!" if request.xhr?
        latitude = params[:latitude]
        longitude = params[:longitude]
        keywords = params[:keywords]
