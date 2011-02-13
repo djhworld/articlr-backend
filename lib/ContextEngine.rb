@@ -1,7 +1,11 @@
 require_relative './ContextProfile.rb'
-require_relative './TwitterEngine.rb'
+require_relative './TwitterEngineManager.rb'
 class ContextEngine
     attr_accessor :context_profile
+
+    def initialize
+        @twitter_engine_manager = TwitterEngineManager.new
+    end
 
     def setup_profile(location, keywords)
         @context_profile = ContextProfile.new(location, keywords)
@@ -15,8 +19,7 @@ class ContextEngine
     end
 
     def get_twitter_stream
-        twitter = TwitterEngine.new
-        tweets = twitter.search_near_me(@context_profile.location[:latitude], @context_profile.location[:longitude], (5.to_s << "mi"), @keywords)
+        tweets = @twitter_engine_manager.search_near_me(@context_profile.location[:latitude], @context_profile.location[:longitude], (5.to_s << "mi"), @context_profile.keywords)
         tweets
     end
 end

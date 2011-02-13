@@ -1,19 +1,44 @@
 require 'twitter'
 require_relative './Tweet.rb'
+require_relative './Constants.rb'
 
 class TwitterEngine
-    def search_near_me(lat, long, rad, word)
-        search = Twitter::Search.new
-        tweets = search.containing(word).geocode(lat,long, (rad.to_s << "mi")).fetch
-        results = []
-        tweets.each do |tweet|
-            results.push(Tweet.new(tweet.id,
-                              tweet.from_user,
-                              tweet.location,
-                              tweet.text,
-                              tweet.created_at,
-                              tweet.photo).to_hash)
+    attr_reader :tweets
+
+    def initialize(word)
+        @search_word = word
+        @tweets = []
+        @since_id = nil
+        @cache_expires = Time.now
+    end
+
+    def gulp(lat, long, rad)
+        if cache_expired
+            puts "CACHE EXPIRED"
+            search = Twitter::Search.new
+
+            if(@since_id.nil?)
+                results = search.per_page(TWEETS_PER_TOPIC).containing(@search_word).geocode(lat,long, (rad.to_s << "mi")).fetch
+            else
+                puts "Getting tweets since #{@since_id}"
+                results = search.since_id(@since_id).per_page(TWEETS_PER_TOPIC).containing(@search_word).geocode(lat,long, (rad.to_s << "mi")).fetch
+            end
+
+            results.each do |tweet|
+                @tweets << (Tweet.new(tweet.id,
+                                      tweet.from_user,
+                                      tweet.location,
+                                      tweet.text,
+                                      tweet.created_at,
+                                      tweet.photo))
+            end
+
+            @since_id = @tweets.last.id if @tweets.size > 0
+            @cache_expires = Time.now+(60*CACHE_EXPIRY)
         end
-        results
+    end
+
+    def cache_expired
+        (@cache_expires < Time.now)
     end
 end
