@@ -10,12 +10,12 @@ class PhotoEngine
         photos = photos.take(20)
 
         photos.each do |ph|
-            results << mkurl(ph.owner, ph.id)
+            results << mkurl(ph.id, ph.farm, ph.server, ph.secret)
         end
         results
     end
 
-    def mkurl(photo_owner, photo_id)
-        "http://www.flickr.com/photos/#{photo_owner}/#{photo_id}"
+    def mkurl(photo_id, photo_farm, photo_server, photo_secret)
+        "http://farm#{photo_farm}.static.flickr.com/#{photo_server}/#{photo_id}_#{photo_secret}_s.jpg"
     end
 end
