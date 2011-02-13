@@ -17,6 +17,17 @@ class TwitterEngineManager
     end
 
     def setup_engines(words)
+        puts "Setting up twitter engines"
+        if words.count < @twitter_engines.count
+            keys = @twitter_engines.keys.dup
+            keys.map! { |item| item.to_s }
+            deleted_words = (keys | words) - (keys & words)
+            deleted_words.each do |w|
+                puts "Deleting keyword #{w}"
+                @twitter_engines.delete(w.intern)
+            end
+        end
+
         words.each do |word|
             if !@twitter_engines.key?(word.intern)
                 puts "Adding new Twitter Engine"
@@ -28,11 +39,12 @@ class TwitterEngineManager
     def collate_tweets
         tweets = []
         @twitter_engines.values.each do |engine|
+            puts "Getting retrieved tweets for #{engine.search_word}"
             tweets << engine.tweets
         end
         tweets.flatten!
 
-        tweets.sort_by! { |tweet| item.date }
+        tweets.sort_by! { |tweet| tweet.date }
         tweets.map! { |item| item.to_hash }
     end
 end
