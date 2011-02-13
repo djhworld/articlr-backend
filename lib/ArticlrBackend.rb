@@ -6,7 +6,7 @@ class ArticlrBackend < Sinatra::Base
     set :context_engine, ContextEngine.new
 
     get '/' do
-        { :error => "Please provide data via the /context route" }
+        { :error => "Please provide data via the /context route" }.to_json
     end
 
    get '/context' do
