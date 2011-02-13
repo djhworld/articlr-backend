@@ -37,9 +37,9 @@ class TwitterEngine
 
             results.each do |tweet|
                 @tweets << (Tweet.new(tweet.id,
-                                      URI.escape(tweet.from_user),
+                                      tweet.from_user,
                                       tweet.location,
-                                      URI.escape(tweet.text),
+                                      tweet.text,
                                       DateTime.parse(tweet.created_at),
                                       URI.escape(tweet.profile_image_url)))
             end
