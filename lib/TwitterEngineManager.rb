@@ -17,8 +17,7 @@ class TwitterEngineManager
     end
 
     def setup_engines(words)
-        puts "Setting up twitter engines"
-        if words.count < @twitter_engines.count
+        if words.count != @twitter_engines.count
             keys = @twitter_engines.keys.dup
             keys.map! { |item| item.to_s }
             deleted_words = (keys | words) - (keys & words)
@@ -26,6 +25,10 @@ class TwitterEngineManager
                 puts "Deleting keyword #{w}"
                 @twitter_engines.delete(w.intern)
             end
+        end
+
+        if words.count == 0
+            @twitter_engines[EMPTY_SEARCH.intern] = TwitterEngine.new(EMPTY_SEARCH)
         end
 
         words.each do |word|

@@ -17,12 +17,22 @@ class TwitterEngine
             puts "CACHE EXPIRED"
             search = Twitter::Search.new
 
+            if(@search_word.equal?(EMPTY_SEARCH))
+                puts "Not searching on word"
+                if(@since_id.nil?)
+                    results = search.per_page(TWEETS_PER_TOPIC).geocode(lat,long, (rad.to_s << "mi")).fetch
+                else
+                    puts "Getting tweets since #{@since_id}"
+                    results = search.since_id(@since_id).per_page(TWEETS_PER_TOPIC).geocode(lat,long, (rad.to_s << "mi")).fetch
+                end
+            else
                 if(@since_id.nil?)
                     results = search.per_page(TWEETS_PER_TOPIC).containing(@search_word).geocode(lat,long, (rad.to_s << "mi")).fetch
                 else
                     puts "Getting tweets since #{@since_id}"
                     results = search.since_id(@since_id).per_page(TWEETS_PER_TOPIC).containing(@search_word).geocode(lat,long, (rad.to_s << "mi")).fetch
                 end
+            end
 
             results.each do |tweet|
                 p tweet.created_at
