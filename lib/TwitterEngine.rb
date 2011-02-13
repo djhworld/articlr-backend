@@ -1,4 +1,5 @@
 require 'twitter'
+require 'date'
 require_relative './Tweet.rb'
 require_relative './Constants.rb'
 
@@ -35,12 +36,11 @@ class TwitterEngine
             end
 
             results.each do |tweet|
-                p tweet.created_at
                 @tweets << (Tweet.new(tweet.id,
                                       tweet.from_user,
                                       tweet.location,
                                       tweet.text,
-                                      tweet.created_at,
+                                      DateTime.parse(tweet.created_at),
                                       tweet.photo))
             end
 

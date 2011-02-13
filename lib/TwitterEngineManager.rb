@@ -17,14 +17,12 @@ class TwitterEngineManager
     end
 
     def setup_engines(words)
-        if words.count != @twitter_engines.count
-            keys = @twitter_engines.keys.dup
-            keys.map! { |item| item.to_s }
-            deleted_words = (keys | words) - (keys & words)
-            deleted_words.each do |w|
-                puts "Deleting keyword #{w}"
-                @twitter_engines.delete(w.intern)
-            end
+        keys = @twitter_engines.keys.dup
+        keys.map! { |item| item.to_s }
+        deleted_words = (keys | words) - (keys & words)
+        deleted_words.each do |w|
+            puts "Deleting keyword #{w}"
+            @twitter_engines.delete(w.intern)
         end
 
         if words.count == 0
@@ -47,7 +45,7 @@ class TwitterEngineManager
         end
         tweets.flatten!
 
-        tweets.sort_by! { |tweet| tweet.date }
+        tweets.sort_by! { |tweet| tweet.date }.reverse!
         tweets.map! { |item| item.to_hash }
     end
 end
